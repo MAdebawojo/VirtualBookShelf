@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About- Virtual Book Shelf</title>
+    <link rel="stylesheet" href="static/styles/about.css">
+</head>
+<body>
+    <div class="wrapper">
+        <a href="{{ url_for('home') }}"><h1>Virtual Book Shelf</h1></a>
+        <div class="title">
+            <h2>About this Project</h2>
+            <hr>
+        </div>
+
+    <div class="container">
+        <main>
+            <h3>Description: </h3>
+            <p>
+                Virtual Bookshelf is a web application designed and developed by Adebawojo Mosopefoluwa.
+                It serves as a digital platform for book enthusiasts to organize and manage their book collections.
+                With Virtual Bookshelf, you can effortlessly catalog your favorite books,
+                and keep track of their reading progress.
+            </p>
+        </main>
+        <section>
+             <h3>Key Features:</h3>
+            <ul>
+                <li class="list-items">
+                    <b>Add and Organize Books: </b>Easily add books to your virtual bookshelf by providing essential details such as book title, authors, a brief description, and its reading status (To Read, Reading, or Complete).</li>
+                <li class="list-items">
+                    <b>Edit Book Details: </b>Need to update the information about a book? Virtual Bookshelf allows you to edit book titles, descriptions, authors, and reading status.</li>
+                <li class="list-items">
+                    <b>Effortless Book Removal:</b> When you're done with a book, you can remove it from your collection with just a click.</li>
+                <li class="list-items">
+                    <b>User-Freindly Imterface:</b> The application offers an intuitive and user-friendly interface, making it simple to navigate and manage your bookshelf</li>
+                <li class="list-items">
+                    <b>Personalized Reading Experience: </b> Keep track of books you're currently reading, those you intend to read, and those you've completed.</li>
+                <li class="list-items">
+                    <b>Secure User Accounts:</b> User accounts are secured with password hashing, ensuring the safety of your personal information.</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="title">
+        <a href="{{ url_for('home') }}">
+            <h2>Go Back</h2>
+        </a>
+    </div>
+    </div>
+
+</body>
+</html>
