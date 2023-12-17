@@ -59,7 +59,7 @@ def login():
             if user and bcrypt.check_password_hash(user.get('password', ''), password):
                 session['email'] = email
                 session['username'] = user['username']
-                print(f"Session: {session['username']}")
+                # print(f"Session: {session['username']}")
                 return redirect(url_for("library", email=email))
             else:
                 flash('Login unsuccessful. Please check email and password', 'danger')
@@ -136,6 +136,7 @@ def add_book():
 @app.route('/update_book/', methods=['POST'])
 def update_book():
     if request.method == 'POST' and 'email' in session and update_book_id:
+        print(update_book_id)
         book_id = ObjectId(update_book_id)
         user_email = session['email']
         book_title = request.form.get('edit_book_title')
@@ -164,7 +165,7 @@ def update_book():
 def get_book_id_route():
     data = request.get_json()
     book_title_to_find = data.get('bookTitle')
-
+    # print(book_title_to_find)
     if book_title_to_find:
         email_to_find = session.get('email')
         if email_to_find:

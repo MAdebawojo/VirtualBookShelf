@@ -9,6 +9,8 @@
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+    <link rel="stylesheet" href="../static/styles/flash-message.css">
+
 </head>
 <body>
     <section class="vh-100" style="background-color: #9A616D;">
@@ -23,7 +25,19 @@
                   </div>
                   <div class="col-md-6 col-lg-7 d-flex align-items-center">
                     <div class="card-body p-4 p-lg-5 text-black">
-      
+                      
+                      <div id="flash-messages">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <ul class="flash">
+                                    {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
                     <!--Login Form  -->
                       <form id="loginForm" method="POST" action="{{ url_for('login') }}">
       
@@ -67,5 +81,6 @@
           </div>
         </div>
       </section>
+      <script src="../static/scripts/flash-messages.js"></script>
 </body>
 </html>

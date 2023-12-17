@@ -1,6 +1,6 @@
 function editBookClicked(buttonElement) {
-        // Get the row containing the button
-        var row = $(buttonElement).closest('tr');
+    // Get the row containing the button
+    var row = $(buttonElement).closest('tr');
 
         // Get the book's details from the row
         var bookTitle = row.find('.book-title').text();
@@ -85,55 +85,56 @@ function editBookClicked(buttonElement) {
         });
     });
 
-    function deleteBook(buttonElement){
-      if (confirm("Are you sure you want to delete this book?")) {
-         // Get the row containing the button
-        var row = $(buttonElement).closest('tr');
-
-        // Get the book's details from the row
-        var bookTitle = row.find('.book-title').text();
-        var description = row.find('.book-description').text();
-        var authors = row.find('.book-authors').text();
-        var status = row.find('.book-status').text();
-
-        console.log(bookTitle)
-        console.log(description)
-        console.log(authors)
-        console.log(status)
-
-        // retrieve book_id from database
-
-        // Create a data object to send as JSON
-        var requestData = {
-         bookTitle: bookTitle
-        };
-
-         // Make an AJAX request to pass the bookTitle to the server-side function
-        $.ajax({
-          type: 'POST',
-          url: '/get_book_id',
-          contentType: 'application/json', // Set the content type to JSON
-          data: JSON.stringify(requestData), // Convert data to JSON format
-          success: function (response) {
-          console.log('Server response:', response);
-         },
-          error: function (error) {
-            console.error('Error:', error);
-          }
-        });
-            // Send an AJAX request to delete the book
+    function deleteBook(buttonElement) {
+        if (confirm("Are you sure you want to delete this book?")) {
+            // Get the row containing the button
+            var row = $(buttonElement).closest('tr');
+    
+            // Get the book's details from the row
+            var bookTitle = row.find('.book-title').text();
+            var description = row.find('.book-description').text();
+            var authors = row.find('.book-authors').text();
+            var status = row.find('.book-status').text();
+    
+            // Create a data object to send as JSON
+            var requestData = {
+                bookTitle: bookTitle
+            };
+    
+            // Make an AJAX request to get the bookId from the server
             $.ajax({
-                type: 'DELETE',
-                url: `/delete_book/`,
+                type: 'POST',
+                url: '/get_book_id',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
                 success: function (response) {
-                    alert(response.message); // Display success message
-                    // Optionally, you can remove the deleted row from the table
-                    $(`tr[data-book-serial="${bookId}"]`).remove();
+                    console.log('Server response:', response);
+    
+                    // Extract bookId from the response
+                    var bookId = response.book_id;
+    
+                    // Send an AJAX request to delete the book
+                    $.ajax({
+                        type: 'DELETE',
+                        url: `/delete_book/`,
+                        data: JSON.stringify({ bookId: bookId }), // Send the bookId for deletion
+                        contentType: 'application/json',
+                        success: function (deleteResponse) {
+                            alert(deleteResponse.message); // Display success message
+                            // Optionally, you can remove the deleted row from the table
+                            row.remove();
+                        },
+                        error: function (deleteError) {
+                            console.error('Error:', deleteError);
+                            alert('Error deleting book.');
+                        }
+                    });
                 },
                 error: function (error) {
                     console.error('Error:', error);
-                    alert('Error deleting book.');
+                    alert('Error retrieving bookId.');
                 }
             });
         }
     }
+    
