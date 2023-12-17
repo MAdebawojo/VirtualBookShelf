@@ -1,3 +1,5 @@
+import signal
+import sys
 import json
 from flask import Flask, session, flash, jsonify, url_for, render_template, request, redirect
 from flask_bcrypt import Bcrypt
@@ -19,6 +21,8 @@ app.secret_key = SECRET_KEY
 # Initialize the MongoDB client
 try:
     client = MongoClient(DATABASE_URI)
+    print(DATABASE_URI)
+    print(client)
     # Get the database
     db = client.get_database(DATABASE_NAME)
     # Get the 'user_accounts' collection
@@ -204,9 +208,20 @@ def logout():
         session.clear()
     return redirect(url_for('login'))
 
+
+
+def handle_exit(signum, frame):
+    print("Received signal to exit. Shutting down gracefully.")
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, handle_exit)
+signal.signal(signal.SIGINT, handle_exit)
+
+
 if __name__ == "__main__":
     print("The server is listening...")
-    app.run(debug=True, port=5002)
+    # app.run(debug=True, port=5002)
+    app.debug = False
 
 
 
