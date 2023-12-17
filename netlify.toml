@@ -1,4 +1,4 @@
 [build]
   command = "pip install -r requirements.txt && gunicorn -b :8000 -w 1 main:app"
   functions = "functions"
-  publish = "static templates"
+  publish = "static, templates"
